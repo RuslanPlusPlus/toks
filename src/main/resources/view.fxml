@@ -25,7 +25,7 @@
             </AnchorPane>
         </items>
       </SplitPane>
-      <Text disable="true" fill="#d13608" layoutX="56.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Com-port chat" textAlignment="CENTER" wrappingWidth="612.6708984375">
+      <Text disable="true" fill="#d13608" layoutX="56.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Com-port chat" textAlignment="CENTER" wrappingWidth="612.6708984375">
          <font>
             <Font name="Castellar" size="42.0" />
          </font>
@@ -50,14 +50,6 @@
       <Button fx:id="senderInfo" layoutX="123.0" layoutY="465.0" mnemonicParsing="false" onAction="#handleSenderPortInfoButton" text="com-port info" />
       <ComboBox fx:id="senderSpeedBox" layoutY="465.0" prefHeight="31.0" prefWidth="123.0" promptText="Speed" />
       <ComboBox fx:id="receiverSpeedBox" layoutX="363.0" layoutY="465.0" prefHeight="31.0" prefWidth="123.0" promptText="Speed" />
-      <Text disable="true" fill="#d13608" layoutX="2.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="! Enter the data in binary format" wrappingWidth="547.6708984375">
-         <font>
-            <Font name="Castellar" size="24.0" />
-         </font>
-         <effect>
-            <Blend />
-         </effect>
-      </Text>
       <Button fx:id="clearButton" layoutX="238.0" layoutY="465.0" mnemonicParsing="false" onAction="#handleClearButton" text="Clear" />
       <Button fx:id="senderSetupButton" layoutY="496.0" mnemonicParsing="false" onAction="#handleSenderSetupButton" prefHeight="31.0" prefWidth="175.0" text="Setup sender com-port" />
       <Button fx:id="receiverSetupButton" layoutX="363.0" layoutY="496.0" mnemonicParsing="false" onAction="#handleReceiverSetupButton" prefHeight="31.0" prefWidth="195.0" text="Setup receiver com-port" />

@@ -12,15 +12,19 @@ public class PortController {
     private int senderDataBits;
     private int senderStopBits;
     private int senderParity;
+
     private int receiverDataBits;
     private int receiverStopBits;
     private int receiverParity;
 
     private String enteredData;
-    private String packedData;
+    private String binaryEnteredData;
+    private String enteredCRCData;
+
     private String receivedData;
-    private String unpackedData;
-    private final String BITFLAG = "01111110";
+    private String decodedReceivedData;
+
+    //private final String BITFLAG = "01111110";
 
     private ViewController viewController;
 
@@ -56,13 +60,14 @@ public class PortController {
             receiver.setParams(this.receiverSpeed, getReceiverDataBits(), getReceiverStopBits(), getReceiverParity());
 
             this.enteredData = this.viewController.getData();
-            this.packedData = packData(doBitStuffing(this.enteredData));
-            sender.writeString(this.packedData);
+
+            this.binaryEnteredData = DataConverter.toBinaryFormat(this.enteredData);
+            this.enteredCRCData = CRCCodingUtil.formDataToSend(this.binaryEnteredData);
+            sender.writeString(this.enteredCRCData);
 
             this.receivedData = receiver.readString();
-            this.unpackedData = doDeStuffing(this.receivedData);
 
-            System.out.println(doDeStuffing(this.packedData));
+            this.decodedReceivedData = DataConverter.toNormalFormat(CRCCodingUtil.removeCRS(this.receivedData));
 
             sender.closePort();
             receiver.closePort();
@@ -80,15 +85,17 @@ public class PortController {
         return receivedData;
     }
 
-    public String getPackedData() {
-        return packedData;
+    public String getBinaryEnteredData() {
+        return binaryEnteredData;
     }
 
-    public String getUnpackedData() {
-        return unpackedData;
+    public String getDecodedReceivedData() {
+        return decodedReceivedData;
     }
 
-    private String doBitStuffing(String data){
+    public String getEnteredCRCData() { return enteredCRCData; }
+
+    /*private String doBitStuffing(String data){
         if (!data.contains("0111111")){
             return data;
         }
@@ -116,9 +123,9 @@ public class PortController {
             }
         }
         return temp;
-    }
+    }*/
 
-    private String doDeStuffing(String data){
+    /*private String doDeStuffing(String data){
         String str = new String();
         String temp = new String();
         boolean doCheck = false;
@@ -147,11 +154,11 @@ public class PortController {
             }
         }
         return temp;
-    }
+    }*/
 
-    private String packData(String data){
+    /*private String packData(String data){
         return BITFLAG + ' ' + data + ' ' + BITFLAG;
-    }
+    }*/
 
     public int getSenderDataBits(){
         return SerialPort.DATABITS_8;

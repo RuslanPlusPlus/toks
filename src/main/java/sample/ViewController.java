@@ -82,7 +82,7 @@ public class ViewController {
         });
 
         this.receiverField.setEditable(false);
-        this.senderField.setPromptText("Enter data only in binary format!");
+        //this.senderField.setPromptText("Enter data only in binary format!");
         this.senderInfo.setDisable(true);
         this.receiverInfo.setDisable(true);
         this.sendButton.setDisable(true);
@@ -159,28 +159,34 @@ public class ViewController {
             return;
         }
 
-        if (!isBinaryData(this.senderField.getText())){
+        /*if (!isBinaryData(this.senderField.getText())){
             showWarningAlert("Enter the data in binary format!");
             return;
-        }
+        }*/
 
         this.data = this.senderField.getText();
         this.portController.sendData();
-        this.receiverField.setText("Received data: " + this.portController.getReceivedData() + '\n' +
-                "Unpacked data: " + this.portController.getUnpackedData());
         this.senderField.setText("Entered data: " + this.portController.getEnteredData() + '\n' +
-                "Packed data: " + this.portController.getPackedData());
-
+                "Converted to binary format: " + this.portController.getBinaryEnteredData() + '\n' +
+                "Encoded with CRC: " + this.portController.getEnteredCRCData());
+        if (CRCCodingUtil.checkCRC(this.portController.getReceivedData())){
+            this.receiverField.setText("Received data: " + this.portController.getReceivedData() + '\n' +
+                "Converted to normal format: " + this.portController.getDecodedReceivedData() );
+        }
+        else{
+            this.receiverField.setText("Transfer error!");
+        }
     }
 
-    private boolean isBinaryData(String data){
+    /*private boolean isBinaryData(String data){
         for (int i = 0; i < data.length(); i++) {
             if (data.charAt(i) != '0' && data.charAt(i) != '1'){
                 return false;
             }
         }
         return true;
-    }
+    }*/
+
 
     @FXML
     private void handleSenderPortInfoButton(){
